@@ -60,16 +60,15 @@ app.get('/', (req, res) => {
   res.json('welcome to the e-commerce api');
 });
 
-app.get('*', (req, res) => {
-  console.log('route hit');
-  res.status(404).json('Sorry cant find that route');
-});
-
 // Below will serve my images for the products and also uploaded images when new products are
 // created
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('*', (req, res) => {
+  res.status(404).json('Sorry cant find that route');
+});
 
 const port = process.env.PORT || 5000;
 
