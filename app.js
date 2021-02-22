@@ -66,9 +66,11 @@ app.use('/orders', ordersRouter);
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use((req, res, next) => {
-//   res.sendFile(path.join(__dirname, 'public', 'index.html'));
-// });
+app.get('*', (req, res) => {
+  let dir = path.join(__dirname, 'public', 'build', 'index.html');
+  console.log(dir);
+  res.sendFile(path.join(__dirname, 'public', 'build', 'index.html'));
+});
 
 const port = process.env.PORT || 5000;
 
