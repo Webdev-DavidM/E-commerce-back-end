@@ -66,11 +66,11 @@ app.get('/', (req, res) => {
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(express.static(path.join(__dirname, '/../front-end/build')));
+app.use(express.static(path.join(__dirname, '/front-end/build')));
 let dir = path.resolve(__dirname, '/../front-end/build/index.html');
 console.log(dir);
 app.get('*', (req, res) =>
-  res.sendFile(path.resolve(__dirname, '/../front-end/build/index.html'))
+  res.sendFile(path.resolve(__dirname, '/front-end/build/index.html'))
 );
 
 const port = process.env.PORT || 5000;
