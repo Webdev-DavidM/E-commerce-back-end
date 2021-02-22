@@ -56,9 +56,9 @@ app.use('/products', productsRouter);
 app.use('/adminuser', adminuserRouter);
 app.use('/orders', ordersRouter);
 
-app.get('/', (req, res) => {
-  res.json('welcome to the e-commerce api');
-});
+// app.get('/', (req, res) => {
+//   res.json('welcome to the e-commerce api');
+// });
 
 // Below will serve my images for the products and also uploaded images when new products are
 // created
@@ -66,9 +66,9 @@ app.get('/', (req, res) => {
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next) => {
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-});
+// app.use((req, res, next) => {
+//   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
 
 const port = process.env.PORT || 5000;
 
