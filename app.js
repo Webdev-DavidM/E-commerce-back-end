@@ -66,8 +66,8 @@ app.get('/', (req, res) => {
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(express.static(path.join(__dirname, '..', '/front-end/build')));
-let dir = path.resolve(__dirname, '../front-end/build/index.html');
+app.use(express.static(path.join(__dirname, '/../front-end/build')));
+let dir = path.resolve(__dirname, '/../front-end/build/index.html');
 console.log(dir);
 app.get('*', (req, res) =>
   res.sendFile(path.resolve(__dirname, '/../front-end/build/index.html'))
