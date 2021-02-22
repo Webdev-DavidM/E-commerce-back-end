@@ -60,6 +60,11 @@ app.get('/', (req, res) => {
   res.json('welcome to the e-commerce api');
 });
 
+app.get('*', (req, res) => {
+  console.log('route hit');
+  res.status(404).json('Sorry cant find that route');
+});
+
 // Below will serve my images for the products and also uploaded images when new products are
 // created
 

@@ -5,7 +5,7 @@ const jwtCreate = (createdUser) => {
   try {
     token = jwt.sign(
       { userId: createdUser.id, email: createdUser.email },
-      'crystal palace are the best',
+      process.env.jwtSecret,
       { expiresIn: '1h' }
     );
     return token;
