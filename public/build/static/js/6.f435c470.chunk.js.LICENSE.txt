@@ -1,3 +1,0 @@
-/**
- * @preserve date-and-time.js (c) KNOWLEDGECODE | MIT
- */
