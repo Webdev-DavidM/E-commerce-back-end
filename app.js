@@ -13,10 +13,6 @@ import cors from 'cors';
 
 // morgan is a middle ware which will details all http requests in the console
 
-// multer is used to upload photos from the user
-import multer from 'multer';
-export const upload = multer({ dest: 'uploads/' });
-
 //cors allows http requests from other domains.
 
 let uri = process.env.mongoURI;
@@ -62,7 +58,8 @@ app.use('/orders', ordersRouter);
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, err, next) => {
+app.use((req, res, err) => {
+  console.log(err);
   res.status(404).json('There has been an error');
 });
 

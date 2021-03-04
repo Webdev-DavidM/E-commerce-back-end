@@ -14,7 +14,6 @@ import Product from '../models/Products.js';
 app.get('/all', async (req, res) => {
   try {
     let products = await Product.find({});
-    console.log(products);
     if (products) {
       res.status(200).json(products).end();
     } else {
@@ -64,7 +63,6 @@ app.get('/product/:id', async (req, res) => {
 app.post('/review/:productId', async (req, res) => {
   let review = req.body.data;
   let { productId } = req.params;
-  console.log(productId, review);
 
   try {
     let product = await Product.findOne({ _id: productId });

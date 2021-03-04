@@ -44,7 +44,7 @@ app.post('/register', async (req, res) => {
     firstName,
     lastName,
     address,
-    email,
+    // email,
     admin: false,
   });
 
@@ -93,8 +93,9 @@ app.post('/login', async (req, res) => {
             id: user._id,
             token,
             seconds,
+            email: user.email,
             address: user.address,
-            admin: false,
+            admin: user.admin,
           });
         } else {
           res.status(401).json('Unauthorised');
