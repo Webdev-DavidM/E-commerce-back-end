@@ -159,13 +159,12 @@ app.delete(
             .json('You dont have authority to make these changes')
             .end();
         } else if (adminUser.admin === true) {
-          switch (req.headers.category) {
-            case 'cycle':
-          }
+          let deleted = await Product.deleteOne({ _id: req.params.productId });
+          res.status(204).json();
         }
       }
     } catch (err) {
-      console.log(err);
+      res.status(400).json('Error');
     }
   }
 );
