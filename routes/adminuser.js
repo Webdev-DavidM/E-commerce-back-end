@@ -22,22 +22,22 @@ import fileUpload from '../middleware/file-uploads.js';
 
 app.post(
   '/create',
-  fileUpload.single('image'),
   jwtVerify,
+  fileUpload.array('images', 4),
 
-  body('name', 'Name is required').not().isEmpty(),
-  body('price').isInt().not().isEmpty(),
-  body('description', 'Description is required').not().isEmpty(),
-  body('stock').isInt().not().isEmpty(),
-  body('size', 'Size is required').not().isEmpty(),
-  body('category', 'Category is required').not().isEmpty(),
-  body('subcategory', 'Subcategory is required').not().isEmpty(),
+  // body('name', 'Name is required').not().isEmpty(),
+  // body('price').not().isEmpty(),
+  // body('description', 'Description is required').not().isEmpty(),
+  // body('stock').not().isEmpty(),
+  // body('small', 'Size is required').not().isEmpty(),
+  // body('category', 'Category is required').not().isEmpty(),
+  // body('subcategory', 'Subcategory is required').not().isEmpty(),
   async (req, res) => {
-    // console.log(req.body);
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+    console.log(req.body, req.files);
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   return res.status(400).json({ errors: errors.array() });
+    // }
     try {
       let adminUser = await User.findOne({ email: req.email });
 
@@ -51,23 +51,36 @@ app.post(
           let {
             name,
             description,
-            size,
+            small,
+            medium,
+            large,
             brand,
             colour,
             category,
             subcategory,
           } = req.body;
 
-          let stock = parseInt(req.body.stock);
+          small = parseInt(small);
+          medium = parseInt(medium);
+          large = parseInt(large);
+
+          let stock = parseInt(small + medium + large);
           let price = parseInt(req.body.price);
+
+          // Here I will access the image files paths and put them in an array so the front end can use them
+          //Note to use muliple files the details are stored under req.files, a single image file is req.file(no s)
+
+          let imagesPathsArray = req.files.map((image) => {
+            return `/uploadedimages/${image.filename}`;
+          });
 
           let newProduct = await new Product({
             name,
             price: price,
             description,
-            images: [`/uploadedimages/${req.imageId}`],
+            images: imagesPathsArray,
             stock: stock,
-            size,
+            size: [{ small: small, medium: medium, large: large }],
             brand,
             colour,
             category,
