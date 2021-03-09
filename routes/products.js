@@ -11,7 +11,7 @@ import Product from '../models/Products.js';
 
 // This will return all the products for the search bar //
 
-app.get('/all', async (req, res) => {
+app.get('/all', async (req, res, next) => {
   try {
     let products = await Product.find({});
     if (products) {
@@ -20,14 +20,15 @@ app.get('/all', async (req, res) => {
       res.status(401).json('no products found');
     }
   } catch (err) {
-    res.json(err);
+    let error = new Error('Opps something went wrong');
+    next(error);
   }
 });
 
 // GET request- return all the products, I will let redux choose which
 // Products to display based on the category and subcategory properties
 
-app.get('/:category', async (req, res) => {
+app.get('/:category', async (req, res, next) => {
   let { category } = req.params;
   try {
     let products = await Product.find({ category });
@@ -37,13 +38,14 @@ app.get('/:category', async (req, res) => {
       res.status(401).json(`No ${category} found`).end();
     }
   } catch (err) {
-    res.json(err);
+    let error = new Error('Opps something went wrong');
+    next(error);
   }
 });
 
 // Get one Product from the document
 
-app.get('/product/:id', async (req, res) => {
+app.get('/product/:id', async (req, res, next) => {
   try {
     let product = await Product.findOne({ _id: req.params.id });
     if (product) {
@@ -52,7 +54,8 @@ app.get('/product/:id', async (req, res) => {
       res.status(401).json('No product found').end();
     }
   } catch (err) {
-    res.json(err);
+    let error = new Error('Opps something went wrong');
+    next(error);
   }
 });
 
@@ -60,7 +63,7 @@ app.get('/product/:id', async (req, res) => {
 // JWT verification as the user must have been verified on the front end to be accessing
 // their account screen
 
-app.post('/review/:productId', async (req, res) => {
+app.post('/review/:productId', async (req, res, next) => {
   let review = req.body.data;
   let { productId } = req.params;
 
@@ -84,7 +87,8 @@ app.post('/review/:productId', async (req, res) => {
       res.status(401).json('No product found').end();
     }
   } catch (err) {
-    res.json(err);
+    let error = new Error('Opps something went wrong');
+    next(error);
   }
 });
 

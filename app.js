@@ -58,9 +58,10 @@ app.use('/orders', ordersRouter);
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, err) => {
+app.use((err, req, res, next) => {
   console.log(err);
-  res.status(404).json('There has been an error');
+  res.status(505).json('There has been an error');
+  next();
 });
 
 const port = process.env.PORT || 5000;

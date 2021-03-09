@@ -23,7 +23,7 @@ import jwtVerify from '../middleware/jwtVerify.js';
 // it doesnt then it bcrypts the password, save the user to the server and then
 // create JWT token and sends info back to the front-end
 
-app.post('/register', async (req, res) => {
+app.post('/register', async (req, res, next) => {
   // Firstly I will make sure the user doesnt exist on the database already
   let existingUser = await User.find({ email: req.body.email });
   if (existingUser.length !== 0) {
@@ -67,14 +67,15 @@ app.post('/register', async (req, res) => {
       admin: false,
     });
   } catch (err) {
-    console.log(err);
+    let error = new Error('Opps something went wrong');
+    next(error);
   }
 });
 
 //POST route- login user, this route checks if the user exists on the database, compared the bcrypt
 // password and then create a JWT token and sends it back to the front-end
 
-app.post('/login', async (req, res) => {
+app.post('/login', async (req, res, next) => {
   try {
     let user = await User.findOne({ email: req.body.email });
     if (!user) {
@@ -103,7 +104,8 @@ app.post('/login', async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    let error = new Error('Opps something went wrong');
+    next(error);
   }
 });
 

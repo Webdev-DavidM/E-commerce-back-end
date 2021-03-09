@@ -6,10 +6,13 @@ let uri = process.env.mongoURI;
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(
+      'mongodb+srv://david:cheese123@cluster0.pfzyl.mongodb.net/My-e-commerce-fitness-app?retryWrites=true&w=majority',
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    );
     const db = await mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', function () {

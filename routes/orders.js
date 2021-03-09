@@ -17,7 +17,7 @@ import User from '../models/User.js';
 // the JWT token is valid and then also in the userID in the header matches the
 // ID of the order
 
-app.get('/order/:orderId', jwtVerify, async (req, res) => {
+app.get('/order/:orderId', jwtVerify, async (req, res, next) => {
   let { userid } = req.headers;
   const { orderId } = req.params;
   try {
@@ -31,7 +31,8 @@ app.get('/order/:orderId', jwtVerify, async (req, res) => {
       res.status(401).json('No orders found');
     }
   } catch (err) {
-    res.status(401).json(err);
+    let error = new Error('Opps something went wrong');
+    next(error);
   }
 });
 
@@ -53,7 +54,7 @@ app.get('/:userId', jwtVerify, async (req, res) => {
 
 // This creates a new order from the user
 
-app.post('/new-order', jwtVerify, async (req, res) => {
+app.post('/new-order', jwtVerify, async (req, res, next) => {
   let { userId, date, orderItems, total, status } = req.body.orderInfo;
   let idConverted = mongoose.Types.ObjectId(userId);
   console.log('orderItems', orderItems);
@@ -81,7 +82,8 @@ app.post('/new-order', jwtVerify, async (req, res) => {
       res.status(201).json(savedOrder);
     }
   } catch (err) {
-    res.status(401).json(err.message);
+    let error = new Error('Opps something went wrong');
+    next(error);
   }
 });
 
